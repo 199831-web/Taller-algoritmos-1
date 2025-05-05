@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Factura con Resta de IVA</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #000; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        .container {
+            background-color: #008000; 
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        h1 {
+            color: #fff; 
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #eee; 
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: #333; 
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #333; 
+            color: #fff; 
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #resultados {
+            margin-top: 25px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9; 
+            color: #333; 
+        }
+
+        #resultados h2 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        .resultado-item {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .resultado-valor {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .final-valor {
+            font-size: 1.2em;
+            font-weight: bolder;
+            color: green;
+            margin-top: 15px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Factura con Resta de IVA</h1>
+        <div class="input-group">
+            <label for="valorCompra">Valor de la Compra:</label>
+            <input type="number" id="valorCompra">
+        </div>
+        <button onclick="calcularYMostrarFactura()">Calcular Factura</button>
+
+        <div id="resultados" style="display: none;">
+            <h2>Resultado:</h2>
+            <div class="resultado-item">Valor de la compra: <span id="resultadoValorCompra" class="resultado-valor"></span></div>
+            <div class="resultado-item">Descuento (10%): <span id="resultadoDescuento" class="resultado-valor"></span></div>
+            <div class="resultado-item">Valor con descuento: <span id="resultadoValorConDescuento" class="resultado-valor"></span></div>
+            <div class="resultado-item">IVA (19%): <span id="resultadoIva" class="resultado-valor"></span></div>
+            <div class="resultado-item">Valor total de la factura: <span id="resultadoValorTotal" class="resultado-valor"></span></div>
+            <div class="resultado-item final-valor">Valor total menos 19%: <span id="resultadoFinal" class="resultado-valor"></span></div>
+        </div>
+    </div>
+
+    <script>
+        function calcularFactura(valorCompra) {
+            const descuento = valorCompra * 0.10;
+            const valorConDescuento = valorCompra - descuento;
+            const iva = valorConDescuento * 0.19;
+            const valorTotal = valorConDescuento + iva;
+            const valorFinal = valorTotal - (valorTotal * 0.19); 
+
+            return {
+                valorCompra: valorCompra,
+                descuento: descuento,
+                valorConDescuento: valorConDescuento,
+                iva: iva,
+                valorTotal: valorTotal,
+                valorFinal: valorFinal 
+            };
+        }
+
+        function calcularYMostrarFactura() {
+            const valorCompraInput = document.getElementById('valorCompra');
+            const valorCompra = parseFloat(valorCompraInput.value);
+
+            if (!isNaN(valorCompra)) {
+                const resultado = calcularFactura(valorCompra);
+                const resultadosDiv = document.getElementById('resultados');
+
+                document.getElementById('resultadoValorCompra').textContent = `$${resultado.valorCompra.toLocaleString('es-CO')}`;
+                document.getElementById('resultadoDescuento').textContent = `$${resultado.descuento.toLocaleString('es-CO')}`;
+                document.getElementById('resultadoValorConDescuento').textContent = `$${resultado.valorConDescuento.toLocaleString('es-CO')}`;
+                document.getElementById('resultadoIva').textContent = `$${resultado.iva.toLocaleString('es-CO')}`;
+                document.getElementById('resultadoValorTotal').textContent = `$${resultado.valorTotal.toLocaleString('es-CO')}`;
+                document.getElementById('resultadoFinal').textContent = `$${resultado.valorFinal.toLocaleString('es-CO')}`;
+
+                resultadosDiv.style.display = 'block'; 
+            } else {
+                alert("Por favor, ingresa un valor de compra válido.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Definitiva</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background-color: black; 
+            color: white; 
+        }
+
+        .calculator {
+            background-color: #a7f070; 
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 350px;
+        }
+
+        h1 {
+            color: #333; 
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 18px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #555; 
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            color: black; 
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1e7e34;
+        }
+
+        .result {
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Calculadora de Definitiva</h1>
+        <div class="input-group">
+            <label for="nota1">Nota 1 (20%):</label>
+            <input type="number" id="nota1" placeholder="Ingrese la primera nota">
+        </div>
+        <div class="input-group">
+            <label for="nota2">Nota 2 (30%):</label>
+            <input type="number" id="nota2" placeholder="Ingrese la segunda nota">
+        </div>
+        <div class="input-group">
+            <label for="nota3">Nota 3 (50%):</label>
+            <input type="number" id="nota3" placeholder="Ingrese la tercera nota">
+        </div>
+        <button onclick="calcularYMostrarDefinitiva()">Calcular Definitiva</button>
+        <div id="resultado" class="result"></div>
+    </div>
+
+    <script>
+        function calcularDefinitiva(nota1, nota2, nota3) {
+            const porcentaje1 = 0.20;
+            const porcentaje2 = 0.30;
+            const porcentaje3 = 0.50;
+
+            const porcentajeNota1 = nota1 * porcentaje1;
+            const porcentajeNota2 = nota2 * porcentaje2;
+            const porcentajeNota3 = nota3 * porcentaje3;
+
+            const definitivaPonderada = porcentajeNota1 + porcentajeNota2 + porcentajeNota3;
+
+            return definitivaPonderada;
+        }
+
+        function calcularYMostrarDefinitiva() {
+            const nota1Input = document.getElementById("nota1");
+            const nota2Input = document.getElementById("nota2");
+            const nota3Input = document.getElementById("nota3");
+            const resultadoDiv = document.getElementById("resultado");
+
+            const nota1 = parseFloat(nota1Input.value);
+            const nota2 = parseFloat(nota2Input.value);
+            const nota3 = parseFloat(nota3Input.value);
+
+            if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3)) {
+                resultadoDiv.textContent = "Por favor, ingrese números válidos para las notas.";
+                return;
+            }
+
+            const definitivaFinal = calcularDefinitiva(nota1, nota2, nota3);
+            resultadoDiv.textContent = `La definitiva es: ${definitivaFinal.toFixed(2)}`;
+        }
+
+        
+        const primeraNotaInicial = 4.5;
+        const segundaNotaInicial = 5.0;
+        const terceraNotaInicial = 3.2;
+
+        const definitivaFinalInicial = calcularDefinitiva(primeraNotaInicial, segundaNotaInicial, terceraNotaInicial);
+
+        console.log("La definitiva de la asignatura es :", definitivaFinalInicial);
+    </script>
+</body>
+</html>
